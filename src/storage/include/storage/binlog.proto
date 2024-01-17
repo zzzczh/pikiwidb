@@ -1,0 +1,30 @@
+syntax="proto2";
+package storage;
+option cc_generic_services = true;
+
+message OriginalBinlog {
+  required uint64 magic = 1;
+  required DataType type = 2;
+  repeated BinlogEntry entries = 3;
+}
+
+message BinlogEntry {
+  required int32 cfid = 1;
+  required OperateType type = 2;
+  required bytes key = 3;
+  optional bytes value = 4;
+}
+
+enum OperateType {
+  kPut = 0;
+  kDelete = 1;
+}
+
+enum DataType {
+  kAll = 0;
+  kStrings = 1;
+  kHashes = 2;
+  kLists = 3;
+  kZSets = 4;
+  kSets  = 5;
+}

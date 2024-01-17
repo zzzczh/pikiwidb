@@ -3,44 +3,43 @@
 #include <optional>
 #include <vector>
 
-#include "rocksdb/slice.h"
+#include "binlog.pb.h"
 
 namespace storage {
 
 using Slice = rocksdb::Slice;
 
-enum class OperateType { kNoOperate = 0, kPut, kDelete };
-enum DataType { kAll, kStrings, kHashes, kLists, kZSets, kSets };
-
-struct BinlogEntry {
-  int8_t cf_idx_;
-  OperateType op_type_;
-  Slice key_;
-  std::optional<Slice> value_;
-};
-
+//或者直接用originalBinlog类，BaikalDB就是没有包装
 class Binlog {
  public:
-  explicit Binlog(DataType type) : data_type_(type) {}
+  explicit Binlog(DataType type) {
+    originalBinlog.set_type(type);
+  }
 
-  // void AppendOperation(int8_t cfid, OperateType type, const Slice& key,
-  //                      const std::optional<Slice>& value = std::nullopt) {
-  //   entries_.emplace_back(cfid, type, key, value);
-  // }
   void AppendPutOperation(int8_t cfid, const Slice& key, const Slice& value) {
-    entries_.emplace_back(cfid, OperateType::kPut, key, value);
+    auto entry = originalBinlog.add_entries();
+    entry->set_cfid(cfid);
+    entry->set_key(key.ToString());
+    entry->set_value(value.ToString());
+    entry->set_type(OperateType::kPut);
   }
   void AppendDeleteOperation(int8_t cfid, const Slice& key) {
-    entries_.emplace_back(cfid, OperateType::kDelete, key, std::nullopt);
+    auto entry = originalBinlog.add_entries();
+    entry->set_cfid(cfid);
+    entry->set_key(key.ToString());
+    entry->set_type(OperateType::kDelete);
   }
 
-  auto Serialization() -> std::string;
-  static auto DeSerialization(const std::string&) -> Binlog;
+  DataType get_type() {
+    return originalBinlog.type();
+  }
 
-  std::vector<BinlogEntry> entries_;
-  DataType data_type_;
+  auto get_entries_() {
+    return originalBinlog.entries();
+  }
 
-  static constexpr uint64_t kMagic_ = 0x12345678;
+  OriginalBinlog originalBinlog;
+
 };
 
 }  // namespace storage
