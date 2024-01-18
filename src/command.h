@@ -72,7 +72,7 @@ PCommandHandler append;
 PCommandHandler bitcount;
 PCommandHandler bitop;
 PCommandHandler getbit;
-PCommandHandler setbit;
+PCommandHandler setbit_;
 PCommandHandler incr;
 PCommandHandler incrby;
 PCommandHandler incrbyfloat;

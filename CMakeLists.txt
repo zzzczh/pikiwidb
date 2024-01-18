@@ -110,7 +110,7 @@ include(cmake/spdlog.cmake)
 include(cmake/folly.cmake)
 include(cmake/gtest.cmake)
 include(cmake/rocksdb.cmake)
-
+include(cmake/protobuf.cmake)
 enable_testing()
 
 ADD_SUBDIRECTORY(src/pstd)

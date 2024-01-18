@@ -1,0 +1,30 @@
+syntax="proto3";
+package storage;
+option optimize_for = LITE_RUNTIME;
+
+message OriginalBinlog {
+   uint64 magic = 1;
+   DataType type = 2;
+  repeated BinlogEntry entries = 3;
+}
+
+message BinlogEntry {
+   int32 cfid = 1;
+   OperateType type = 2;
+   bytes key = 3;
+  optional bytes value = 4;
+}
+
+enum OperateType {
+  kPut = 0;
+  kDelete = 1;
+}
+
+enum DataType {
+  kAll = 0;
+  kStrings = 1;
+  kHashes = 2;
+  kLists = 3;
+  kZSets = 4;
+  kSets  = 5;
+}

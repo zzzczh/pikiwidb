@@ -384,7 +384,7 @@ PError getbit(const std::vector<PString>& params, UnboundedBuffer* reply) {
   return kPErrorOK;
 }
 
-PError setbit(const std::vector<PString>& params, UnboundedBuffer* reply) {
+PError setbit_(const std::vector<PString>& params, UnboundedBuffer* reply) {
   PObject* value;
   PError err = PSTORE.GetValueByType(params[1], value, kPTypeString);
   if (err == kPErrorNotExist) {

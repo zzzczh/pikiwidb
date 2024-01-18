@@ -64,7 +64,7 @@ const PCommandInfo PCommandTable::s_info[] = {
     {"bitcount", kPAttrRead, -2, &bitcount},
     // {"bitop", PAttr_write, -4, &bitop},
     {"getbit", kPAttrRead, 3, &getbit},
-    {"setbit", kPAttrWrite, 4, &setbit},
+    {"setbit", kPAttrWrite, 4, &setbit_},
     {"incr", kPAttrWrite, 2, &incr},
     {"decr", kPAttrWrite, 2, &decr},
     {"incrby", kPAttrWrite, 3, &incrby},

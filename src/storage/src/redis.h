@@ -13,10 +13,10 @@
 #include "rocksdb/slice.h"
 #include "rocksdb/status.h"
 
+#include "binlog.h"
 #include "src/lock_mgr.h"
 #include "src/lru_cache.h"
 #include "src/mutex_impl.h"
-#include "storage/binlog.h"
 #include "storage/storage.h"
 
 namespace storage {

@@ -9,8 +9,8 @@
 
 #include "rocksdb/status.h"
 
-#include "binlog.h"
 #include "pstd/noncopyable.h"
+#include "storage/src/binlog.h"
 
 namespace storage {
 
